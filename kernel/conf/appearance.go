@@ -45,7 +45,7 @@ func NewAppearance() *Appearance {
 		CodeBlockThemeLight: "github",
 		CodeBlockThemeDark:  "base16/dracula",
 		Lang:                "en_US",
-		CloseButtonBehavior: 0,
+		CloseButtonBehavior: 1,
 		HideStatusBar:       false,
 	}
 }
