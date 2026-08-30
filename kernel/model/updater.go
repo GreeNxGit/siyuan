@@ -267,23 +267,26 @@ func isVersionUpToDate(releaseVer string) bool {
 var skipInstallPkgPlatformCached = -1
 
 func skipNewVerInstallPkg() bool {
-	if skipInstallPkgPlatformCached == -1 {
-		skipInstallPkgPlatformCached = 0
-		if !gulu.OS.IsWindows() && !gulu.OS.IsDarwin() {
-			skipInstallPkgPlatformCached = 1
-		} else if util.ISMicrosoftStore || util.ContainerStd != util.Container {
-			skipInstallPkgPlatformCached = 1
-		} else if gulu.OS.IsWindows() {
-			plat := strings.ToLower(Conf.System.OSPlatform)
-			// Windows 7, 8 and Server 2012 are no longer supported https://github.com/siyuan-note/siyuan/issues/7347
-			if strings.Contains(plat, " 7 ") || strings.Contains(plat, " 8 ") || strings.Contains(plat, "2012") {
-				skipInstallPkgPlatformCached = 1
-			}
-		}
-	}
-
-	if skipInstallPkgPlatformCached == 1 || !Conf.System.DownloadInstallPkg {
+	if !gulu.OS.IsWindows() && !gulu.OS.IsDarwin() {
 		return true
+	}
+	if util.ISMicrosoftStore || util.ContainerStd != util.Container {
+		return true
+	}
+	if !Conf.System.DownloadInstallPkg {
+		return true
+	} else {
+		// Conf.System.DownloadInstallPkg(自动下载更新安装包) 强制赋值为false
+		Conf.System.DownloadInstallPkg = false
+		Conf.Save()
+		return true
+	}
+	if gulu.OS.IsWindows() {
+		plat := strings.ToLower(Conf.System.OSPlatform)
+		// Windows 7, 8 and Server 2012 are no longer supported https://github.com/siyuan-note/siyuan/issues/7347
+		if strings.Contains(plat, " 7 ") || strings.Contains(plat, " 8 ") || strings.Contains(plat, "2012") {
+			return true
+		}
 	}
 	return false
 }

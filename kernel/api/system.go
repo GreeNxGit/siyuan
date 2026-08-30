@@ -413,16 +413,17 @@ func normalizeCustomEmojiPath(name, ext string) (string, error) {
 }
 
 func checkUpdate(c *gin.Context) {
-	ret := gulu.Ret.NewResult()
-	defer c.JSON(http.StatusOK, ret)
+	// ret := gulu.Ret.NewResult()
+	// defer c.JSON(http.StatusOK, ret)
 
-	arg, ok := util.JsonArg(c, ret)
-	if !ok {
-		return
-	}
+	// arg, ok := util.JsonArg(c, ret)
+	// if !ok {
+	// 	return
+	// }
 
-	showMsg := arg["showMsg"].(bool)
-	model.CheckUpdate(showMsg)
+	// showMsg := arg["showMsg"].(bool)
+	// model.CheckUpdate(showMsg)
+	return
 }
 
 func exportLog(c *gin.Context) {
